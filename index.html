@@ -1,73 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zhuhai Embodied Systems</title>
-<style>
-  :root { --fg:#111; --muted:#777; --rule:#e9e9e9; }
-  body{
-    margin:0;
-    padding:72px 40px;
-    max-width:860px;
-    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-    color:var(--fg);
-    background:#fff;
-    line-height:1.55;
-  }
-  .logo{ width:82px; height:auto; display:block; margin:0 0 18px 0; }
-  h1{ font-size:26px; font-weight:550; margin:0 0 6px 0; letter-spacing:0.2px; }
-  .cn{ font-size:14px; color:var(--muted); margin:0 0 28px 0; }
-  .tagline{ font-size:14px; color:var(--muted); margin:0 0 34px 0; }
-  .rule{ height:1px; background:var(--rule); margin:28px 0; }
-  .kicker{ font-size:12px; letter-spacing:2px; color:var(--muted); margin:0 0 14px 0; }
-  .item{ display:flex; justify-content:space-between; gap:18px; padding:10px 0; border-bottom:1px solid var(--rule); }
-  .item:last-child{ border-bottom:none; }
-  .left{ font-size:15px; }
-  .status{ font-size:13px; color:var(--muted); white-space:nowrap; }
-  footer{ margin-top:60px; font-size:13px; color:var(--muted); }
-  a{ color:inherit; text-decoration:none; border-bottom:1px solid rgba(17,17,17,0.15); }
-  a:hover{ border-bottom-color:rgba(17,17,17,0.45); }
-</style>
-</head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Zhuhai Embodied Systems</title>
+  <meta name="description" content="Independent engineering studio documenting embodied systems, simulation frameworks, and iterative technical development."/>
+  <link rel="stylesheet" href="css/style.css"/>
 
+  <!-- SVG favicon (no image files needed) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Cpath d='M10 38c6-10 14-12 22-6 8 6 14 5 22-6' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M10 46c6-8 14-9 22-4 8 5 14 4 22-5' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"/>
+</head>
 <body>
 
-<!-- TODO: 把下面 src 换成你自己的 Logo 图片路径（稍后我带你上传） -->
-<img class="logo" src="logo.png" alt="Zhuhai Embodied Systems" onerror="this.style.display='none'"/>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <!-- Inline logo (no file) -->
+        <img class="logo-img" alt="Zhuhai Embodied Systems" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Cpath d='M10 38c6-10 14-12 22-6 8 6 14 5 22-6' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M10 46c6-8 14-9 22-4 8 5 14 4 22-5' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+        <div class="brand-title">Zhuhai Embodied Systems</div>
+      </div>
+      <nav class="nav">
+        <a class="active" href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
 
-<h1>Zhuhai Embodied Systems</h1>
-<p class="cn">逐海具身科技 · Independent Engineering Studio</p>
+  <main class="container">
+    <section class="hero">
+      <h1 class="h1">Independent Engineering Studio for Embodied Systems</h1>
+      <p class="subtitle">
+        <strong>Continuous technical refinement, in service of life.</strong>
+        <br/>
+        A structured archive of embodied systems spanning robotics–vision coupling, industrial embedded deployment, sensing hardware, and simulation-driven engineering.
+      </p>
 
-<p class="tagline">Continuous refinement of embodied engineering for human life.</p>
+      <div class="badges">
+        <span class="badge">Embodied Control</span>
+        <span class="badge">Embedded Systems</span>
+        <span class="badge">Robotics × Vision</span>
+        <span class="badge">Simulation & Verification</span>
+        <span class="badge">Iterative Development</span>
+      </div>
 
-<div class="rule"></div>
+      <div class="cta">
+        <a class="btn primary" href="projects.html">View Projects</a>
+        <a class="btn" href="contact.html">Contact</a>
+      </div>
+    </section>
 
-<p class="kicker">ARCHIVE</p>
+    <section class="grid">
+      <div class="card">
+        <h2>Archive</h2>
 
-<div class="item">
-  <div class="left">ZES-001 · PCM Cutting Fluid Thermal Conduction Study</div>
-  <div class="status">In Review</div>
-</div>
+        <div class="project">
+          <div class="name">ZES-001 · PCM Cutting Fluid Thermal Conduction Study</div>
+          <div class="meta">In Review</div>
+        </div>
+        <div class="project">
+          <div class="name">ZES-002 · Embodied Quadruped Robot — Vision–Motion Coupling</div>
+          <div class="meta">Awarded / Iterating</div>
+        </div>
+        <div class="project">
+          <div class="name">ZES-003 · Industrial Mother–Child Vehicle Coordination</div>
+          <div class="meta">In Progress</div>
+        </div>
+        <div class="project">
+          <div class="name">ZES-005 · Non-Intrusive Load Monitoring Smart Meter</div>
+          <div class="meta">In Progress</div>
+        </div>
+        <div class="project">
+          <div class="name">ZES-006 · Glass Curtain Wall Assistive Installation Machine</div>
+          <div class="meta">Prototype</div>
+        </div>
+        <div class="project">
+          <div class="name">ZES-DE · AI Development Project (Germany)</div>
+          <div class="meta">Completed</div>
+        </div>
 
-<div class="item">
-  <div class="left">ZES-002 · STM32 Embodied Motion Control System</div>
-  <div class="status">In Progress</div>
-</div>
+        <div class="hr"></div>
+        <div class="small">
+          Consistent identifiers and status labels keep the archive coherent and ready for publication or future productization.
+        </div>
+      </div>
 
-<div class="item">
-  <div class="left">ZES-003 · Industrial Embedded Deployment Case</div>
-  <div class="status">In Progress</div>
-</div>
+      <div class="card">
+        <h2>Notes</h2>
+        <p class="small">
+          Minimal, auditable artifacts. Iteration over hype. Verification as a habit.
+        </p>
 
-<div class="item">
-  <div class="left">ZES-004 · Fluid Simulation Framework</div>
-  <div class="status">Concept</div>
-</div>
+        <div class="hr"></div>
+        <p class="small">
+          <span class="kbd">In Review</span> — submitted / under evaluation<br/>
+          <span class="kbd">In Progress</span> — active development<br/>
+          <span class="kbd">Prototype</span> — tested in real conditions<br/>
+          <span class="kbd">Completed</span> — finalized and archived
+        </p>
 
-<footer>
-  <div>Contact: <a href="mailto:humphreywangsina@outlook.com">humphreywangsina@outlook.com</a></div>
-</footer>
+        <div class="hr"></div>
+        <div class="linkline small">
+          <a href="projects.html">See full project list</a>
+          <a href="about.html">Studio positioning</a>
+        </div>
+      </div>
+    </section>
 
+    <footer class="footer">
+      <div>© <span id="y"></span> Zhuhai Embodied Systems</div>
+      <div class="kbd">Built with GitHub Pages</div>
+    </footer>
+  </main>
+
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
