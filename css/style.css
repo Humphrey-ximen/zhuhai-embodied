@@ -17,7 +17,6 @@ body{
   line-height:1.6;
   -webkit-font-smoothing: antialiased;
 
-  /* Subtle “space” background (very Apple / studio-like) */
   background:
     radial-gradient(circle at 15% 10%, #f3f3f3 0%, transparent 42%),
     radial-gradient(circle at 85% 18%, #f0f0f0 0%, transparent 46%),
@@ -25,11 +24,9 @@ body{
     #ffffff;
 }
 
-/* Links */
 a{ color:inherit; text-decoration:none; }
 a:hover{ opacity:0.88; }
 
-/* Topbar */
 .topbar{
   position: sticky;
   top: 0;
@@ -95,14 +92,12 @@ a:hover{ opacity:0.88; }
   font-weight: 520;
 }
 
-/* Layout */
 .container{
   max-width: 1060px;
   margin: 0 auto;
   padding: 82px 28px 120px;
 }
 
-/* Hero */
 .hero{
   margin-bottom: 58px;
 }
@@ -129,7 +124,6 @@ a:hover{ opacity:0.88; }
   margin: 0;
 }
 
-/* Badges */
 .badges{
   display:flex;
   flex-wrap: wrap;
@@ -147,7 +141,6 @@ a:hover{ opacity:0.88; }
   backdrop-filter: blur(12px);
 }
 
-/* Buttons */
 .cta{
   display:flex;
   gap: 14px;
@@ -180,7 +173,6 @@ a:hover{ opacity:0.88; }
   border-color: #0a0a0a;
 }
 
-/* Grid */
 .grid{
   display:grid;
   grid-template-columns: 1.35fr 0.65fr;
@@ -195,7 +187,6 @@ a:hover{ opacity:0.88; }
   .topbar-inner{ padding: 14px 18px; }
 }
 
-/* Card */
 .card{
   background: var(--card);
   backdrop-filter: blur(18px);
@@ -214,7 +205,6 @@ a:hover{ opacity:0.88; }
   font-weight: 650;
 }
 
-/* Projects list */
 .project{
   display:flex;
   justify-content:space-between;
@@ -255,7 +245,6 @@ a:hover{ opacity:0.88; }
   margin: 22px 0;
 }
 
-/* Footer */
 .footer{
   margin-top: 86px;
   padding-top: 22px;
