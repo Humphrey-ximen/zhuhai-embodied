@@ -1,131 +1,273 @@
-<!doctype html>
-<html lang="en">
+// === 漂亮登录页 HTML（替换你原来的 return new Response(`...`) 内容） ===
+return new Response(`<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Zhuhai Embodied Systems</title>
-  <meta name="description" content="Independent engineering studio documenting embodied systems, simulation frameworks, and iterative technical development."/>
-  <link rel="stylesheet" href="css/style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>逐海 · 私有开源数据</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --line: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.62);
+      --danger: #ff4d4f;
+      --ok: #2bd576;
+      --shadow: 0 20px 80px rgba(0,0,0,.55);
+      --radius: 20px;
+    }
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Cpath d='M10 38c6-10 14-12 22-6 8 6 14 5 22-6' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M10 46c6-8 14-9 22-4 8 5 14 4 22-5' fill='none' stroke='%23fff' stroke-opacity='.72' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"/>
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "PingFang SC",
+                   "Helvetica Neue", Arial, "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(70,120,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 85% 25%, rgba(117,255,197,.14), transparent 55%),
+        radial-gradient(1000px 800px at 50% 110%, rgba(255,255,255,.07), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow:hidden;
+    }
+
+    /* subtle animated grain */
+    .grain{
+      position:fixed; inset:-30%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.25;
+      transform: rotate(8deg);
+      pointer-events:none;
+      animation: drift 10s linear infinite;
+    }
+    @keyframes drift{
+      from{ transform:translate3d(0,0,0) rotate(8deg); }
+      to{ transform:translate3d(-80px,60px,0) rotate(8deg); }
+    }
+
+    .wrap{
+      height:100%;
+      display:grid;
+      place-items:center;
+      padding: 28px 18px;
+      position:relative;
+      z-index:1;
+    }
+
+    .card{
+      width:min(520px, 92vw);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .topline{
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+      opacity:.35;
+    }
+
+    .inner{ padding: 26px 26px 22px; }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    /* 可替换成你自己的 Logo：用 background-image(url(...)) 或直接放 img */
+    .logo{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.45), transparent 60%),
+        linear-gradient(135deg, rgba(70,120,255,.8), rgba(117,255,197,.65));
+      box-shadow: 0 10px 30px rgba(70,120,255,.18);
+      border: 1px solid rgba(255,255,255,.25);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-20%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      transform: rotate(25deg);
+      animation: shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%,60%{ transform: translateX(-30%) rotate(25deg); opacity:.0; }
+      75%{ opacity:.8; }
+      100%{ transform: translateX(30%) rotate(25deg); opacity:0; }
+    }
+
+    h1{
+      font-size: 18px;
+      margin:0;
+      letter-spacing:.4px;
+      line-height:1.2;
+    }
+    .sub{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    form{ margin-top: 18px; }
+
+    .field{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      transition: border-color .2s ease, transform .12s ease, background .2s ease;
+    }
+    .field:focus-within{
+      border-color: rgba(117,255,197,.38);
+      background: rgba(255,255,255,.07);
+      transform: translateY(-1px);
+    }
+    .icon{
+      width: 18px; height:18px; opacity:.7;
+      flex:0 0 auto;
+    }
+    input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color: var(--text);
+      font-size: 14px;
+      padding: 2px 2px;
+    }
+    input::placeholder{ color: rgba(255,255,255,.35); }
+
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button{
+      width: 100%;
+      border:0;
+      cursor:pointer;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: rgba(10,12,18,.95);
+      font-weight: 650;
+      letter-spacing:.2px;
+      background: linear-gradient(135deg, rgba(117,255,197,.95), rgba(70,120,255,.85));
+      box-shadow: 0 16px 40px rgba(70,120,255,.18);
+      transition: transform .12s ease, filter .2s ease;
+    }
+    button:hover{ filter: brightness(1.03); }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    .hint{
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height:1.45;
+    }
+
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 14px 22px 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.42);
+      font-size: 12px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 99px;
+      background: rgba(43,213,118,.95);
+      box-shadow: 0 0 0 3px rgba(43,213,118,.15);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .grain, .logo:after{ animation:none; }
+      .field{ transition:none; }
+      button{ transition:none; }
+    }
+  </style>
 </head>
 <body>
+  <div class="grain"></div>
+  <div class="wrap">
+    <div class="card">
+      <div class="topline"></div>
+      <div class="inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>逐海 · 私有开源数据</h1>
+            <p class="sub">输入访问口令后继续（仅用于内部/授权访问）</p>
+          </div>
+        </div>
 
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <img class="logo-img" alt="Zhuhai Embodied Systems"
-             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Cpath d='M10 38c6-10 14-12 22-6 8 6 14 5 22-6' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M10 46c6-8 14-9 22-4 8 5 14 4 22-5' fill='none' stroke='%23fff' stroke-opacity='.72' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-        <div class="brand-title">Zhuhai Embodied Systems</div>
+        <form method="POST" action="/">
+          <div class="field">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M7 10V8a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M6.5 10h11A2.5 2.5 0 0 1 20 12.5v6A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5v-6A2.5 2.5 0 0 1 6.5 10Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M12 14v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <input name="password" type="password" placeholder="Access Passcode" autocomplete="current-password" autofocus />
+          </div>
+
+          <div class="row">
+            <button type="submit">进入数据区</button>
+          </div>
+
+          <div class="hint">
+            提示：口令通过 Cookie 临时保存。建议在共享设备上使用后退出浏览器或清除 Cookie。
+          </div>
+        </form>
       </div>
 
-      <nav class="nav">
-        <a class="active" href="index.html">Home</a>
-        <a href="projects.html">Projects</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+      <div class="footer">
+        <span class="badge"><span class="dot"></span> Protected by Cloudflare Workers</span>
+        <span>Zhuhai Embodied Systems</span>
+      </div>
     </div>
   </div>
 
-  <main class="container">
-    <section class="hero">
-      <h1 class="h1">Technical Studio for Embodied Systems</h1>
-      <p class="subtitle"><strong>Continuous technical refinement, in service of life.</strong></p>
-      <p class="subline">Embodied systems · Embedded control · Simulation-driven development · Iteration with verification</p>
-
-      <div class="badges">
-        <span class="badge">Embodied Control</span>
-        <span class="badge">Robotics × Vision</span>
-        <span class="badge">Industrial Embedded Deployment</span>
-        <span class="badge">Sensing Hardware</span>
-        <span class="badge">Simulation & Verification</span>
-      </div>
-
-      <div class="cta">
-        <a class="btn primary" href="projects.html">View Projects</a>
-        <a class="btn" href="contact.html">Contact</a>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="card">
-        <h2>Archive</h2>
-
-        <div class="project">
-          <div class="name">ZES-001 · PCM Cutting Fluid Thermal Conduction Study</div>
-          <div class="meta">In Review</div>
-        </div>
-        <div class="project">
-          <div class="name">ZES-002 · Embodied Quadruped Robot — Vision–Motion Coupling</div>
-          <div class="meta">Awarded / Iterating</div>
-        </div>
-        <div class="project">
-          <div class="name">ZES-003 · Industrial Mother–Child Vehicle Coordination</div>
-          <div class="meta">In Progress</div>
-        </div>
-        <div class="project">
-          <div class="name">ZES-005 · Non-Intrusive Load Monitoring Smart Meter</div>
-          <div class="meta">In Progress</div>
-        </div>
-        <div class="project">
-          <div class="name">ZES-006 · Glass Curtain Wall Assistive Installation Machine</div>
-          <div class="meta">Prototype</div>
-        </div>
-        <div class="project">
-          <div class="name">ZES-007 · Motor Response Feedback Driver (Closed-Loop Control Module)</div>
-          <div class="meta">Prototype</div>
-        </div>
-        <div class="project">
-          <div class="name">ZES-DE · AI Development Project (Germany)</div>
-          <div class="meta">Completed</div>
-        </div>
-
-        <div class="hr"></div>
-        <div class="small">
-          Clear identifiers + clear status labels. Built for long-term coherence and future publication or productization.
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Open Source</h2>
-        <p class="small">
-          Open-sourced by default, unless restricted by confidentiality obligations (e.g., NDAs) or third-party rights.
-        </p>
-
-        <div class="hr"></div>
-
-        <h2>Studio Notes</h2>
-        <p class="small">
-          Minimal artifacts. Measurable iteration. Verification as habit.
-        </p>
-
-        <div class="hr"></div>
-
-        <p class="small">
-          <span class="kbd">In Review</span> — submitted / under evaluation<br/>
-          <span class="kbd">In Progress</span> — active development<br/>
-          <span class="kbd">Prototype</span> — tested and measurable<br/>
-          <span class="kbd">Completed</span> — finalized and archived
-        </p>
-
-        <div class="hr"></div>
-
-        <div class="linkline small">
-          <a href="projects.html">Full project list</a>
-          <a href="about.html">Open source policy</a>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div>© <span id="y"></span> Zhuhai Embodied Systems</div>
-      <div class="kbd">zhuhai-embodied.tech</div>
-    </footer>
-  </main>
-
-<script>
-  document.getElementById("y").textContent = new Date().getFullYear();
-</script>
+  <script>
+    // 小细节：回车提交 / 自动聚焦已做；这里可扩展错误提示等
+  </script>
 </body>
-</html>
+</html>`, {
+  headers: { "content-type": "text/html; charset=utf-8" },
+});
