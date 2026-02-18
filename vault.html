@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Vault · Zhuhai Embodied Systems</title>
+  <meta name="description" content="Password-gated access."/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-title">Zhuhai Embodied Systems</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a class="active" href="vault.html">Vault</a>
+    </nav>
+  </div>
+</div>
+
+<main class="container">
+  <section class="hero">
+    <h1 class="h1" style="font-size:44px; letter-spacing:-1.2px;">Vault</h1>
+    <p class="subtitle"><strong>Access is gated.</strong></p>
+    <p class="subline">Enter the shared passphrase to view protected materials.</p>
+  </section>
+
+  <section class="card">
+    <h2>Unlock</h2>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+      <input id="pw" type="password" placeholder="Passphrase"
+             style="flex:1; min-width:240px; padding:12px 14px; border-radius:14px; border:1px solid rgba(0,0,0,0.08); background:rgba(255,255,255,0.75); outline:none; font-size:14px;">
+      <button class="btn primary" id="btn">Unlock</button>
+      <button class="btn" id="logout" style="display:none;">Logout</button>
+    </div>
+
+    <div class="hr"></div>
+
+    <div id="msg" class="small">Token not found. Locked.</div>
+
+    <div class="hr"></div>
+
+    <h2>Protected Data</h2>
+    <div id="data" class="small">—</div>
+  </section>
+
+  <footer class="footer">
+    <div>© <span id="y"></span> Zhuhai Embodied Systems</div>
+    <div class="kbd">Vault</div>
+  </footer>
+</main>
+
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+
+  // ✅ Replace with your Worker endpoint:
+  const API_BASE = "https://YOUR_WORKER_SUBDOMAIN.workers.dev";
+
+  const msg = document.getElementById("msg");
+  const dataEl = document.getElementById("data");
+  const logoutBtn = document.getElementById("logout");
+
+  function setLockedUI(locked=true){
+    logoutBtn.style.display = locked ? "none" : "inline-flex";
+  }
+
+  function getToken(){
+    return localStorage.getItem("zes_vault_token") || "";
+  }
+
+  function setToken(t){
+    localStorage.setItem("zes_vault_token", t);
+  }
+
+  function clearToken(){
+    localStorage.removeItem("zes_vault_token");
+  }
+
+  async function fetchProtected(){
+    const token = getToken();
+    if(!token){
+      msg.textContent = "Token not found. Locked.";
+      dataEl.textContent = "—";
+      setLockedUI(true);
+      return;
+    }
+
+    msg.textContent = "Token found. Fetching…";
+    setLockedUI(false);
+
+    const r = await fetch(`${API_BASE}/api/data`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if(!r.ok){
+      clearToken();
+      msg.textContent = "Token invalid/expired. Locked.";
+      dataEl.textContent = "—";
+      setLockedUI(true);
+      return;
+    }
+
+    const j = await r.json();
+    msg.textContent = "Unlocked.";
+    dataEl.textContent = JSON.stringify(j, null, 2);
+  }
+
+  document.getElementById("btn").addEventListener("click", async () => {
+    const pw = document.getElementById("pw").value.trim();
+    if(!pw){
+      msg.textContent = "Enter passphrase.";
+      return;
+    }
+
+    msg.textContent = "Verifying…";
+
+    const r = await fetch(`${API_BASE}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify({ passphrase: pw })
+    });
+
+    if(!r.ok){
+      msg.textContent = "Wrong passphrase.";
+      return;
+    }
+
+    const j = await r.json();
+    setToken(j.token);
+    document.getElementById("pw").value = "";
+    await fetchProtected();
+  });
+
+  logoutBtn.addEventListener("click", () => {
+    clearToken();
+    msg.textContent = "Logged out. Locked.";
+    dataEl.textContent = "—";
+    setLockedUI(true);
+  });
+
+  fetchProtected();
+</script>
+
+</body>
+</html>
